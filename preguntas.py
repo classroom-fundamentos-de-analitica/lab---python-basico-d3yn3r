@@ -21,7 +21,16 @@ def pregunta_01():
     214
 
     """
-    return
+    with open("data.csv", "r") as archivo:
+        datos = archivo.readlines()
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+    suma = 0
+    for i in range(len(datos)):
+        suma+=int(datos[i][1])
+
+    return suma
 
 
 def pregunta_02():
@@ -39,7 +48,28 @@ def pregunta_02():
     ]
 
     """
-    return
+    with open("data.csv", "r") as archivo:
+        datos = archivo.readlines()
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = []
+    letras.append([datos[0][0], 1])
+    for i in range(1, len(datos)):
+            band = False
+            for j in range(len(letras)):
+                if letras[j][0] == datos[i][0]:
+                    letras[j][1] += 1
+                    band = True
+                    break
+                
+            if not band:
+                letras.append([datos[i][0], 1])
+
+    letras = [tuple(x) for x in letras]
+    letras.sort()
+    return letras
 
 
 def pregunta_03():
@@ -57,7 +87,29 @@ def pregunta_03():
     ]
 
     """
-    return
+    with open("data.csv", "r") as archivo:
+        datos = archivo.readlines()
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = []
+    letras.append([datos[0][0], int(datos[0][1])])
+    for i in range(1, len(datos)):
+            band = False
+            for j in range(len(letras)):
+                if letras[j][0] == datos[i][0]:
+                    letras[j][1] += int(datos[i][1])
+                    band = True
+                    break
+                
+            if not band:
+                letras.append([datos[i][0], int(datos[i][1])])
+
+    letras = [tuple(x) for x in letras]
+    letras.sort()
+
+    return letras
 
 
 def pregunta_04():
@@ -82,7 +134,29 @@ def pregunta_04():
     ]
 
     """
-    return
+    with open("data.csv", 'r') as file:
+        datos = file.readlines()
+
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = []
+    letras.append([datos[0][2].split('-')[1], 1])
+
+    for i in range(1, len(datos)):
+        band = False
+        fecha = datos[i][2].split('-')
+        for j in range(len(letras)):
+            if letras[j][0] == fecha[1]:
+                letras[j][1] += 1
+                band = True
+                break
+        if not band:
+            letras.append([fecha[1], 1])
+    letras = [tuple(x) for x in letras]
+    letras.sort()
+    return letras
 
 
 def pregunta_05():
@@ -100,7 +174,33 @@ def pregunta_05():
     ]
 
     """
-    return
+    with open("data.csv", 'r') as file:
+        datos = file.readlines()
+    
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = []
+    letras.append([datos[0][0], int(datos[0][1]), int(datos[0][1])])
+    for i in range(1, len(datos)):
+        band = False
+        for j in range(len(letras)):
+            if datos[i][0] == letras[j][0]:
+                if int(datos[i][1]) > letras[j][1]:
+                    letras[j][1] = int(datos[i][1])
+                elif int(datos[i][1]) < letras[j][2]:
+                    letras[j][2] = int(datos[i][1])
+                band = True
+                break
+            
+        if not band:
+            print(datos[i][0])
+            letras.append([datos[i][0], int(datos[i][1]), int(datos[i][1])])
+    letras = [tuple(x) for x in letras]
+    letras.sort()
+    return letras
+    
 
 
 def pregunta_06():
@@ -125,7 +225,37 @@ def pregunta_06():
     ]
 
     """
-    return
+    with open("data.csv", 'r') as file:
+        datos = file.readlines()
+    
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace(',', ':') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+    
+    letras = []
+    letras.append([datos[0][4].split(':')[0], int(datos[0][4].split(':')[1]), int(datos[0][4].split(':')[1])])
+    for i in range(len(datos)):
+        registro = datos[i][4].split(':')
+        inicio = 0
+        if i == 0:
+            inicio = 2
+        for k in range(inicio, len(registro), 2):
+            band = False
+            for j in range(len(letras)):
+                if letras[j][0] == registro[k]:
+                    if int(registro[k + 1]) > letras[j][2]:
+                        letras[j][2] = int(registro[k + 1])
+                    elif int(registro[k + 1]) < letras[j][1]:
+                        letras[j][1] = int(registro[k + 1])
+                    band = True
+                    break
+                
+            if not band:
+                letras.append([registro[k], int(registro[k + 1]), int(registro[k + 1])])
+    letras = [tuple(x) for x in letras]
+    letras.sort()
+    return letras
 
 
 def pregunta_07():
@@ -149,7 +279,28 @@ def pregunta_07():
     ]
 
     """
-    return
+    with open("data.csv", 'r') as file:
+        datos = file.readlines()
+    
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = []
+    letras.append([int(datos[0][1]), [datos[0][0]]])
+    for i in range(1, len(datos)):
+        band = False
+        for j in range(len(letras)):
+            if letras[j][0] == int(datos[i][1]):
+                letras[j][1].append(datos[i][0])
+                band = True
+                break
+            
+        if not band:
+            letras.append([int(datos[i][1]), [datos[i][0]]])
+    letras = [tuple(x) for x in letras]
+    letras.sort()
+    return letras
 
 
 def pregunta_08():
@@ -174,7 +325,30 @@ def pregunta_08():
     ]
 
     """
-    return
+    with open("data.csv", 'r') as file:
+        datos = file.readlines()
+    
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = []
+    letras.append([int(datos[0][1]), [datos[0][0]]])
+    for i in range(1, len(datos)):
+        band = False
+        for j in range(len(letras)):
+            if letras[j][0] == int(datos[i][1]):
+                if datos[i][0] not in letras[j][1]:
+                    letras[j][1].append(datos[i][0])
+                band = True
+                break
+            
+        if not band:
+            letras.append([int(datos[i][1]), [datos[i][0]]])
+    letras = [[x[0], sorted(x[1])] for x in letras]
+    letras = [tuple(x) for x in letras]
+    letras.sort()
+    return letras
 
 
 def pregunta_09():
@@ -197,7 +371,37 @@ def pregunta_09():
     }
 
     """
-    return
+    with open("data.csv", 'r') as file:
+        datos = file.readlines()
+    
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace(',', ':') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = {}
+    letras[datos[0][4].split(':')[0]] = 1
+    for i in range(len(datos)):
+        registro = datos[i][4].split(':')
+        inicio = 0
+        if i == 0:
+            inicio = 2
+        for k in range(inicio, len(registro), 2):
+            band = False
+            for j in letras:
+                if j == registro[k]:
+                    letras[j] += 1
+                    band = True
+                    break
+                
+            if not band:
+                letras[registro[k]] = 1
+    letras1 = sorted(letras)
+    letras2 = {}
+
+    for i in letras1:
+        letras2[i] = letras[i]
+    return letras2
 
 
 def pregunta_10():
@@ -218,7 +422,18 @@ def pregunta_10():
 
 
     """
-    return
+    with open("data.csv", 'r') as file:
+        datos = file.readlines()
+    
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace(',', '-') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = []
+    for i in range(len(datos)):
+        letras.append((datos[i][0], len(datos[i][3].split('-')), len(datos[i][4].split('-'))))
+    return letras
 
 
 def pregunta_11():
@@ -239,7 +454,42 @@ def pregunta_11():
 
 
     """
-    return
+
+    with open("data.csv", 'r') as file:
+        datos = file.readlines()
+    
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace(',', '-') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = []
+    letras.append([datos[0][3].split('-')[0], int(datos[0][1])])
+
+    for i in range(len(datos)):
+        columna4 = datos[i][3].split('-')
+        inicio = 0
+        if i == 0:
+            inicio = 1
+
+        for k in range(inicio, len(columna4)):
+            band = False
+
+            for j in range(len(letras)):
+                if letras[j][0] == columna4[k]:
+                    letras[j][1] += int(datos[i][1])
+                    band = True
+                    break
+                
+            if not band:
+                letras.append([columna4[k], int(datos[i][1])])
+
+    letras.sort()
+    letras1 = {}
+
+    for i in letras:
+        letras1[i[0]] = i[1]
+    return letras1
 
 
 def pregunta_12():
@@ -257,4 +507,38 @@ def pregunta_12():
     }
 
     """
-    return
+    with open("data.csv", 'r') as file:
+        datos = file.readlines()
+    
+    datos = [row.replace('\n', '') for row in datos]
+    datos = [row.replace(',', ':') for row in datos]
+    datos = [row.replace('\t', ',') for row in datos]
+    datos = [row.split(',') for row in datos]
+
+    letras = []
+    letras.append([datos[0][0], int(datos[0][4].split(':')[1])])
+
+    for i in range(len(datos)):
+        columna5 = datos[i][4].split(':')
+        inicio = 1
+
+        if i == 0:
+            inicio = 3
+
+        for k in range(inicio, len(columna5), 2):
+            band = False
+            for j in range(len(letras)):
+                if letras[j][0] == datos[i][0]:
+                    letras[j][1] += int(columna5[k])
+                    band = True
+                    break
+                
+            if not band:
+                letras.append([datos[i][0], int(columna5[k])])
+
+    letras.sort()
+    letras1 = {}
+
+    for i in letras:
+        letras1[i[0]] = i[1]
+    return letras1
